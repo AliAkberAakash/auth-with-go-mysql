@@ -12,6 +12,7 @@ func main() {
 	port := ":8000"
 
 	http.HandleFunc("/register", handler.RegisterHandler)
+	http.HandleFunc("/login", handler.LoginHandler)
 
 	log.Fatal(http.ListenAndServe(port, nil))
 }

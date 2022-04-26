@@ -9,30 +9,43 @@ import (
 	"github.com/AliAkberAakash/auth-with-go-mysql/response"
 )
 
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
-	var userCredential model.User
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
-	err := json.NewDecoder(r.Body).Decode(&userCredential)
+	var lr model.LoginRequest
+
+	err := json.NewDecoder(r.Body).Decode(&lr)
 
 	if err != nil {
 		json.NewEncoder(w).Encode(
 			response.GetCommonResponse(
 				http.StatusBadRequest,
-				"Invalid Request Body",
+				"Invalid body",
 				nil,
 			),
 		)
 		return
 	}
 
-	controller.Register(userCredential)
+	_, err = controller.Login(lr)
+
+	if err != nil {
+		json.NewEncoder(w).Encode(
+			response.GetCommonResponse(
+				http.StatusBadRequest,
+				err.Error(),
+				nil,
+			),
+		)
+		return
+	}
 
 	json.NewEncoder(w).Encode(
 		response.GetCommonResponse(
-			http.StatusCreated,
-			"User  Created Successfully",
-			controller.Users,
+			http.StatusOK,
+			"Logged in successfully",
+			nil,
 		),
 	)
 	return
+
 }

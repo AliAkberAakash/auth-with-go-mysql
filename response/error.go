@@ -1,13 +1,15 @@
 package response
 
 type errorResponse struct {
-	StatusCode int    `json:"statusCode"`
-	Message    string `json:"message"`
+	StatusCode int         `json:"statusCode"`
+	Message    string      `json:"message"`
+	Data       interface{} `json:"data"`
 }
 
-func GetErrorResponse(statusCode int, message string) errorResponse {
+func GetCommonResponse(statusCode int, message string, data interface{}) errorResponse {
 	return errorResponse{
 		StatusCode: statusCode,
 		Message:    message,
+		Data:       data,
 	}
 }
