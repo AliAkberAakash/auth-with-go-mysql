@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1
+#syntax=docker/dockerfile:1
 
 FROM golang:1.18.1-alpine
 
@@ -13,8 +13,8 @@ RUN go mod download
 
 COPY *.go ./
 
-RUN go build -o /github.com/AliAkberAakash/auth-with-go-mysql
+RUN go build -o /auth-with-go-mysql
 
-CMD ["/github.com/AliAkberAakash/auth-with-go-mysql"]
+CMD ["/auth-with-go-mysql"]
 
 
