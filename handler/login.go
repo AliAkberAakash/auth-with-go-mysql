@@ -9,7 +9,13 @@ import (
 	"github.com/AliAkberAakash/auth-with-go-mysql/response"
 )
 
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
+type loginHandler struct{}
+
+func newLoginHandler() http.Handler {
+	return &loginHandler{}
+}
+
+func (h *loginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	var lr model.LoginRequest
 
@@ -48,4 +54,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	)
 	return
 
+}
+
+func GetLoginHandler() http.Handler {
+	return GetCommonHeader(newLoginHandler())
 }

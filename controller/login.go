@@ -4,12 +4,14 @@ import (
 	"errors"
 
 	"github.com/AliAkberAakash/auth-with-go-mysql/model"
+	"github.com/AliAkberAakash/auth-with-go-mysql/repository"
 	"golang.org/x/crypto/bcrypt"
 )
 
 func Login(lr model.LoginRequest) (bool, error) {
 	if lr.IsValid() {
-		for _, user := range Users {
+		users := repository.GetAllUsers()
+		for _, user := range users {
 			err := bcrypt.CompareHashAndPassword(
 				[]byte(user.Password),
 				[]byte(lr.Password),

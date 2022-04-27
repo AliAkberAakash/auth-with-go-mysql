@@ -9,7 +9,13 @@ import (
 	"github.com/AliAkberAakash/auth-with-go-mysql/response"
 )
 
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+type registerHandler struct{}
+
+func newRegisterHandler() http.Handler {
+	return &registerHandler{}
+}
+
+func (h *registerHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var userCredential model.User
 
 	err := json.NewDecoder(r.Body).Decode(&userCredential)
@@ -31,8 +37,12 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		response.GetCommonResponse(
 			http.StatusCreated,
 			"User  Created Successfully",
-			controller.Users,
+			userCredential,
 		),
 	)
 	return
+}
+
+func GetRegisterHandler() http.Handler {
+	return GetCommonHeader(newRegisterHandler())
 }

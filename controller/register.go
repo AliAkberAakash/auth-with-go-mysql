@@ -4,10 +4,9 @@ import (
 	"errors"
 
 	"github.com/AliAkberAakash/auth-with-go-mysql/model"
+	"github.com/AliAkberAakash/auth-with-go-mysql/repository"
 	"golang.org/x/crypto/bcrypt"
 )
-
-var Users []model.User
 
 func Register(user model.User) error {
 	if user.IsValid() {
@@ -19,7 +18,7 @@ func Register(user model.User) error {
 		}
 
 		user.Password = string(passwordHash)
-		Users = append(Users, user)
+		repository.Register(user)
 		return nil
 	}
 
